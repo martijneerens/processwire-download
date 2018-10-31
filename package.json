@@ -1,0 +1,17 @@
+{
+  "name": "processwire-download",
+  "description": "Downloads tables and images from a publicly accessible Processwire API.",
+  "version": "1.0.0",
+  "main": "processwire-download.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "download": "^4.4.3",
+    "grunt": "^1.0.2",
+    "node-fetch": "^2.2.0",
+    "papaparse": "^4.1.2"
+  },
+  "devDependencies": {
+    "grunt-bump": "^0.7.0",
+    "load-grunt-tasks": "^3.4.0"
+  }
+}
