@@ -78,6 +78,9 @@ class ProcesswireDownload {
 
     writeJson(json) {
         let itemJson = this.stringifyJson(json);
+        for (let item of json.files) {
+            itemJson = itemJson.replace(item.preview_url, item.localpath)
+        }
 
         return new Promise((resolve, reject) => {
             fs.writeFile(this.opts.dataPath, itemJson, 'utf-8', (err, written) => {
