@@ -7,6 +7,7 @@ const fetch = require('node-fetch');
 
 const defaultOpts = {
     dataPath: 'data.json',
+    dataFileName: null, //save under different filename structure
     mediaPath: './media/', // This is used for saving the file
     mediaBookPath: 'media/', // And this is used for replacing
     item: null, //tables to be fetched from the API
@@ -43,10 +44,12 @@ class ProcesswireDownload {
     downloadMedia() {
         let downloads = [];
 
-
         for (let media of this.data.files) {
             downloads.push((downloadCallback) => {
-                this.fileExists(media.localpath, (pathExists) => {
+                if (!fs.existsSync(this.opts.mediaPath)) {
+                    fs.mkdirSync(this.opts.mediaPath);
+                }
+                this.fileExists(media.localpath + media.filename, (pathExists) => {
                     if (pathExists) {
                         console.log(`Skipping ${media.filename}, exists`);
                         downloadCallback();
@@ -83,11 +86,21 @@ class ProcesswireDownload {
         }
 
         return new Promise((resolve, reject) => {
-            fs.writeFile(this.opts.dataPath, itemJson, 'utf-8', (err, written) => {
+
+            let dataPath = this.opts.dataPath;
+
+            if (this.opts.dataFileName) {
+                if (!fs.existsSync(dataPath)) {
+                    fs.mkdirSync(dataPath);
+                }
+                dataPath += this.opts.dataFileName;
+            }
+
+            fs.writeFile(dataPath, itemJson, 'utf-8', (err, written) => {
                 if (err) {
                     reject();
                 } else {
-                    console.log(`Written JSON file at ${this.opts.dataPath}`);
+                    console.log(`Written JSON file at ${dataPath}`);
                     resolve();
                 }
             });
@@ -101,8 +114,9 @@ class ProcesswireDownload {
     }
 
     allItemsProcessed(data) {
-        console.log('all data done!');
-        this.writeJson(data);
+        this.writeJson(data)
+            .then(() => {
+            });
 
         this.data = data;
         this.downloadMedia()
@@ -112,6 +126,6 @@ class ProcesswireDownload {
 };
 
 module.exports = function (opts) {
-    const pwdownload = new ProcesswireDownload (opts);
+    const pwdownload = new ProcesswireDownload(opts);
     pwdownload.start();
 }
