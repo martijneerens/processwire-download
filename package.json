@@ -1,7 +1,7 @@
 {
   "name": "processwire-download",
   "description": "Downloads tables and images from a publicly accessible Processwire API.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "processwire-download.js",
   "dependencies": {
     "async": "^1.5.2",
