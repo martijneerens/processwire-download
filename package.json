@@ -8,7 +8,7 @@
     "download": "^4.4.3",
     "grunt": "^1.0.2",
     "node-fetch": "^2.2.0",
-    "papaparse": "^4.1.2"
+    "papaparse": "^5.2.0"
   },
   "devDependencies": {
     "grunt-bump": "^0.7.0",
