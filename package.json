@@ -4,7 +4,7 @@
   "version": "1.0.3",
   "main": "processwire-download.js",
   "dependencies": {
-    "async": "^1.5.2",
+    "async": "^3.2.2",
     "download": "^4.4.3",
     "grunt": "^1.0.2",
     "node-fetch": "^2.2.0",
